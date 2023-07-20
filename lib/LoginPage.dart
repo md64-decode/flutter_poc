@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-final _firebase = FirebaseAuth.instance;
+import 'package:flutter_poc/ForgotPasswordPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +10,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _firebase = FirebaseAuth.instance;
   var _isLogin = true;
   final _form = GlobalKey<FormState>();
 
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                 const Text(
                   "Flut-POC",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.teal,
                     fontSize: 25.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                 Text(
                   _isLogin ? "Login to Flut-POC App" : "Signup to Flut-POC App",
                   style: const TextStyle(
-                    color: Colors.black,
+                    color: Colors.teal,
                     fontSize: 44.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: "User Email",
                           prefixIcon: Icon(
                             Icons.mail,
-                            color: Colors.black,
+                            color: Colors.teal,
                           ),
                         ),
                         validator: (value) {
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: "User Password",
                           prefixIcon: Icon(
                             Icons.lock,
-                            color: Colors.black,
+                            color: Colors.teal,
                           ),
                         ),
                         validator: (value) {
@@ -138,25 +138,30 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 _isLogin
                     ? TextButton(
-                  style: TextButton.styleFrom(foregroundColor: Colors.white10),
-                  child: const Text(
-                    'Forgot your password?',
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
-                  ),
-                  onPressed: () {
-                    print('Forgot button pressed');
-                  },
-                )
-                    : const SizedBox(height: 12),
+                        style: TextButton.styleFrom(
+                            foregroundColor: Colors.white10),
+                        child: const Text(
+                          'Forgot your password?',
+                          style: TextStyle(
+                            color: Colors.teal,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPasswordPage()));
+                        },
+                      )
+                    : const SizedBox(height: 48),
                 const SizedBox(
                   height: 80.0,
                 ),
                 Container(
                   width: double.infinity,
                   child: RawMaterialButton(
-                    fillColor: const Color(0xFF0069FE),
+                    fillColor: Theme.of(context).primaryColor,
                     elevation: 0.0,
                     padding: const EdgeInsets.symmetric(vertical: 20.0),
                     shape: RoundedRectangleBorder(
@@ -182,11 +187,12 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       _isLogin ? 'Create an account' : 'I Already have an account.',
                       style: const TextStyle(
-                        color: Colors.blue,
+                        color: Colors.teal,
                       ),
                     ),
                     onPressed: () {
                       setState(() {
+                        _form.currentState?.reset();
                         _isLogin = !_isLogin;
                       });
                     },
